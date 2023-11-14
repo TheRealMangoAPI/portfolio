@@ -31,7 +31,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
             currentRoute === "/projects" ? "text-blue-500" : "text-black"
           }`}
         >
-          Project
+          Projects
         </Link>
         <Link
           href={"/contact"}

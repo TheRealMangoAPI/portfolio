@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import Bird from "@/models/Bird";
 import Plane from "@/models/Plane";
 import HomeINfo from "@/components/HomeINfo";
+import Script from "next/script";
 
 const adjustIslandForScreen = (width: number): [Vector3, Vector3, Euler] => {
   let screenScale: Vector3 = new Vector3();
@@ -97,8 +98,8 @@ const Home = () => {
           />
           <Plane
             isRotating={isRotating}
-            planeScale={planeScale}
-            planePosition={planePosition}
+            scale={planeScale}
+            position={planePosition}
             rotation={[0, 14.2, 0]}
           />
         </Suspense>

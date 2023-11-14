@@ -25,6 +25,7 @@
     "raw-loader": "^4.0.2",
     "react": "^18",
     "react-dom": "^18",
+    "react-icons": "^4.12.0",
     "three": "^0.158.0"
   },
   "devDependencies": {
