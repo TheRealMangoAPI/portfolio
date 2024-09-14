@@ -13,7 +13,7 @@ const ProjectItems: ProjectItem[] = [
     title: 'Fruity Bio',
     image: 'https://zerotwo.lol/Yq2cyx0Z4ZkmXnL54woi.png',
     description:
-      'Fruity Bio provides detailed information about various fruits, their nutritional values, and health benefits.',
+      'Fruity Bio provides customized biography pages for your social media profiles. [Work in Progress]',
     projectLink: 'https://fruity.bio'
   },
   {
