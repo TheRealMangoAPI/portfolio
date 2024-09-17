@@ -7,6 +7,8 @@ import { Section, SectionTitle } from '@/components/ui/Section'
 import { Button, Card, CardBody, CardHeader, Input, Textarea } from '@nextui-org/react'
 import { SendIcon } from 'lucide-react'
 import { contactMessageSchema, ContactMessage } from '@/schemas/contact-message'
+import { Link } from '@nextui-org/link'
+import { DISCORD_INVITE_URL } from '@/data/links'
 
 function ContactSection() {
   const [state, setState] = React.useState<'IDLE' | 'ERROR' | 'SUCCESS' | 'LOADING'>(
@@ -48,7 +50,7 @@ function ContactSection() {
 
   return (
     <Section className="pt-36" id="contact">
-      <Card className="w-full max-w-6xl border p-8">
+      <Card className={`w-full max-w-6xl border p-8 ${state === 'SUCCESS' && 'hidden'}`}>
         <CardHeader className="justify-center">
           <SectionTitle
             subTitle="CONTACT"
@@ -103,6 +105,15 @@ function ContactSection() {
               </Button>
             </div>
           </form>
+        </CardBody>
+      </Card>
+      <Card className={`w-full max-w-6xl border p-8 ${state !== 'SUCCESS' && 'hidden'}`}>
+        <CardBody>
+          <p>
+            Thank you for reaching out! I will get back to you as soon as possible. In the
+            meantime, you can also reach me on{' '}
+            <Link href={DISCORD_INVITE_URL}>My Discord</Link>.
+          </p>
         </CardBody>
       </Card>
     </Section>
