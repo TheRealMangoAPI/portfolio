@@ -1,4 +1,4 @@
-import arcjet, { tokenBucket, validateEmail } from '@arcjet/next'
+import arcjet, { protectSignup } from '@arcjet/next'
 import { NextResponse } from 'next/server'
 import { contactMessageSchema } from '@/schemas/contact-message'
 import webhook from 'webhook-discord'
@@ -6,51 +6,59 @@ import webhook from 'webhook-discord'
 const aj = arcjet({
   key: process.env.ARCJET_KEY,
   rules: [
-    validateEmail({
-      mode: 'LIVE',
-      block: ['DISPOSABLE', 'INVALID', 'NO_MX_RECORDS']
-    }),
-    tokenBucket({
-      mode: 'LIVE',
-      refillRate: 1,
-      interval: 60,
-      capacity: 4
+    protectSignup({
+      email: {
+        mode: 'LIVE',
+        block: ['DISPOSABLE', 'NO_MX_RECORDS', 'INVALID']
+      },
+      bots: {
+        mode: 'LIVE'
+      },
+      rateLimit: {
+        mode: 'LIVE',
+        interval: '10m',
+        max: 3
+      }
     })
   ]
 })
 
 export async function POST(req: Request) {
-  const body = await req.json()
-  console.log('Received contact message:', body)
+  const body = await req.json().catch(() => {
+    return NextResponse.json({ error: 'Missing Body' }, { status: 400 })
+  })
+
   const values = contactMessageSchema.safeParse(body)
 
   if (!values.success) {
     return NextResponse.json({ error: 'Invalid data' }, { status: 400 })
   }
 
-  console.log('Validated contact message:', values.data)
-
   const decision = await aj.protect(req, {
-    email: values.data.email,
-    requested: 1
+    email: values.data.email
   })
 
   if (decision.isDenied()) {
     if (decision.reason.isEmail()) {
       return NextResponse.json(
         {
-          message: 'Invalid email',
-          reason: decision.reason
+          message: 'Invalid email'
         },
         { status: 400 }
       )
     } else if (decision.reason.isRateLimit()) {
       return NextResponse.json(
         {
-          message: 'Rate limit exceeded',
-          reason: decision.reason
+          message: 'Rate limit exceeded'
         },
         { status: 429 }
+      )
+    } else if (decision.reason.isBot()) {
+      return NextResponse.json(
+        {
+          message: 'Bot detected'
+        },
+        { status: 403 }
       )
     } else {
       return NextResponse.json({ message: 'Forbidden' }, { status: 403 })
