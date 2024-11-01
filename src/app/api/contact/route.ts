@@ -65,6 +65,19 @@ export async function POST(req: Request) {
     }
   }
 
+  if (decision.ip.hasASN() && decision.ip.asnType == 'hosting') {
+    return NextResponse.json({ message: 'Hosting provider detected' }, { status: 403 })
+  }
+
+  if (
+    decision.ip.isHosting() ||
+    decision.ip.isVpn() ||
+    decision.ip.isProxy() ||
+    decision.ip.isRelay()
+  ) {
+    return NextResponse.json({ message: 'Suspicious network detected' }, { status: 403 })
+  }
+
   const hook = new webhook.Webhook(process.env.DISCORD_WEBHOOK_URL)
   const message = new webhook.MessageBuilder()
     .setName('Contact Form')
