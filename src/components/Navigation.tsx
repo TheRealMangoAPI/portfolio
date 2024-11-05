@@ -11,9 +11,9 @@ import {
 import { Link } from '@nextui-org/link'
 import { NavigationItems } from '@/data/navigation'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
-import { Button } from '@nextui-org/react'
-import { FaGithub } from 'react-icons/fa6'
 import { GITHUB_REPO_URL } from '@/data/links'
+
+import GitHubButton from './ui/GitHubButton'
 
 function Navigation() {
   return (
@@ -29,15 +29,7 @@ function Navigation() {
         ))}
       </NavbarContent>
       <NavbarContent justify="end">
-        <Button
-          as={Link}
-          href={GITHUB_REPO_URL}
-          target="_blank"
-          variant="bordered"
-          isIconOnly
-        >
-          <FaGithub size={22} />
-        </Button>
+        <GitHubButton url={GITHUB_REPO_URL} />
         <ThemeSwitcher triggerClassName="hidden md:flex" />
         <NavbarMenuToggle className="block md:hidden" />
       </NavbarContent>
