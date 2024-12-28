@@ -10,23 +10,19 @@ import {
 import { ArrowUpRightIcon } from 'lucide-react'
 import Image from 'next/image'
 import { Link } from '@nextui-org/link'
+import { ProjectItem } from '@/data/projects'
 
 type ProjectListProps = {
   children: React.ReactNode
 }
 
 function ProjectList({ children }: ProjectListProps) {
-  return <div className="flex w-full max-w-6xl flex-col space-y-16">{children}</div>
+  return <div className="flex w-full max-w-6xl flex-col space-y-24">{children}</div>
 }
 
-type ProjectProps = {
-  children: React.ReactNode
-  title: string
-  image: string
+type ProjectItemProps = {
   idx: number
-  projectLink: string
-  imageBorder?: boolean
-}
+} & ProjectItem
 
 function Project({
   children,
@@ -34,8 +30,10 @@ function Project({
   image,
   idx,
   projectLink,
-  imageBorder
-}: ProjectProps) {
+  imageBorder,
+  notice,
+  overrides
+}: ProjectItemProps) {
   const isReversed = idx % 2 !== 0
 
   return (
@@ -45,6 +43,7 @@ function Project({
       <Card className="border p-8">
         <CardHeader>
           <h1 className="text-4xl font-semibold">{title}</h1>
+          <p className="-mt-2.5 ml-2">{notice}</p>
         </CardHeader>
         <Divider />
         <CardBody className="text-foreground-500">{children}</CardBody>
@@ -63,8 +62,8 @@ function Project({
       <Image
         src={image}
         alt="Project Image"
-        width={350}
-        height={350}
+        width={overrides?.imageWidth ?? 240}
+        height={overrides?.imageHeight ?? 240}
         className={`hidden rounded-md md:block ${imageBorder && 'border'}`}
       />
     </div>

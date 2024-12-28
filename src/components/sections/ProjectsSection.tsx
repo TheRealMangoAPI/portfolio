@@ -21,8 +21,10 @@ function ProjectsSection() {
             idx={index}
             projectLink={project.projectLink}
             imageBorder={project.imageBorder}
+            notice={project.notice}
+            overrides={project.overrides}
           >
-            <p>{project.description}</p>
+            {project.children}
           </Project>
         ))}
       </ProjectList>
