@@ -13,6 +13,10 @@ const NavigationItems: NavigationItem[] = [
     href: '#about'
   },
   {
+    name: 'Timeline',
+    href: '/timeline'
+  },
+  {
     name: 'Contact',
     href: '#contact'
   }
