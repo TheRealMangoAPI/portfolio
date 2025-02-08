@@ -63,8 +63,8 @@ function AboutMeSection() {
         <BentoBoxItem className="col-span-3 md:col-span-1">
           <h3 className="text-lg font-semibold">Who Am I?</h3>
           <p className="mt-2 text-sm text-foreground-500">
-            I&apos;m a 15-year-old guy from Switzerland who loves to code and build
-            things. I&apos;ve been coding for 4 years now and I&apos;m passionate about
+            I&apos;m a 16-year-old guy from Switzerland who loves to code and build
+            things. I&apos;ve been coding for 5 years now and I&apos;m passionate about
             web development, design, and technology.
           </p>
         </BentoBoxItem>
