@@ -6,11 +6,11 @@ type NavigationItem = {
 const NavigationItems: NavigationItem[] = [
   {
     name: 'Projects',
-    href: '#projects'
+    href: '/#projects'
   },
   {
     name: 'About Me',
-    href: '#about'
+    href: '/#about'
   },
   {
     name: 'Timeline',
@@ -18,7 +18,7 @@ const NavigationItems: NavigationItem[] = [
   },
   {
     name: 'Contact',
-    href: '#contact'
+    href: '/#contact'
   }
 ]
 
