@@ -1,14 +1,18 @@
 import { z } from 'zod'
 
-const envVariables = z.object({
+const EnvSchema = z.object({
+  NODE_ENV: z.string().default('development'),
   ARCJET_KEY: z.string(),
   DISCORD_WEBHOOK_URL: z.string()
 })
 
-envVariables.parse(process.env)
+// eslint-disable-next-line n/no-process-env
+const { data: env, error } = EnvSchema.safeParse(process.env)
 
-declare global {
-  namespace NodeJS {
-    interface ProcessEnv extends z.infer<typeof envVariables> {}
-  }
+if (error) {
+  console.error('❌ Invalid env:')
+  console.error(JSON.stringify(error.flatten().fieldErrors, null, 2))
+  process.exit(1)
 }
+
+export default env!

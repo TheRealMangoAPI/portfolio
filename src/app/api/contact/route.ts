@@ -2,9 +2,10 @@ import arcjet, { protectSignup } from '@arcjet/next'
 import { NextResponse } from 'next/server'
 import { contactMessageSchema } from '@/schemas/contact-message'
 import webhook from 'webhook-discord'
+import env from '@/env'
 
 const aj = arcjet({
-  key: process.env.ARCJET_KEY,
+  key: env.ARCJET_KEY,
   rules: [
     protectSignup({
       email: {
@@ -78,7 +79,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: 'Suspicious network detected' }, { status: 403 })
   }
 
-  const hook = new webhook.Webhook(process.env.DISCORD_WEBHOOK_URL)
+  const hook = new webhook.Webhook(env.DISCORD_WEBHOOK_URL)
   const message = new webhook.MessageBuilder()
     .setName('Contact Form')
     .setTitle('New Contact Message')
