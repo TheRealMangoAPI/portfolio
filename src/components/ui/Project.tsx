@@ -8,7 +8,7 @@ import {
   Divider,
   Chip
 } from '@nextui-org/react'
-import { ArrowUpRightIcon, Tag } from 'lucide-react'
+import { ArrowUpRightIcon } from 'lucide-react'
 import Image from 'next/image'
 import { Link } from '@nextui-org/link'
 import { ProjectItem } from '@/data/projects'
