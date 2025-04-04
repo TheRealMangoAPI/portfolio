@@ -19,10 +19,11 @@ function ProjectsSection() {
             title={project.title}
             image={project.image}
             idx={index}
-            projectLink={project.projectLink}
+            projectLinks={project.projectLinks}
             imageBorder={project.imageBorder}
             notice={project.notice}
             overrides={project.overrides}
+            mentions={project.mentions}
           >
             {project.children}
           </Project>

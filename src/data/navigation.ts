@@ -3,7 +3,7 @@ type NavigationItem = {
   href: string
 }
 
-const NavigationItems: NavigationItem[] = [
+export const NavigationItems: NavigationItem[] = [
   {
     name: 'Projects',
     href: '/#projects'
@@ -21,5 +21,3 @@ const NavigationItems: NavigationItem[] = [
     href: '/#contact'
   }
 ]
-
-export { NavigationItems }

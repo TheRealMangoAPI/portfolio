@@ -5,15 +5,8 @@ import {
   YOUTUBE_CHANNEL_URL
 } from '@/data/links'
 import { FaDiscord, FaGithub, FaSpotify, FaYoutube } from 'react-icons/fa6'
-import { IconType } from 'react-icons'
 
-type SocialItem = {
-  name: string
-  href: string
-  icon: IconType
-}
-
-const SocialItems: SocialItem[] = [
+export const SocialItems = [
   {
     name: 'GitHub',
     href: GITHUB_PROFILE_URL,
@@ -35,5 +28,3 @@ const SocialItems: SocialItem[] = [
     icon: FaSpotify
   }
 ]
-
-export { SocialItems }
