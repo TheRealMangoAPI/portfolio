@@ -10,6 +10,9 @@ import {
   SiVercel
 } from 'react-icons/si'
 import { Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react'
+import { CpuArchitecture } from '@/components/ui/CpuArch'
+
+import '@/styles/cpu.css'
 
 function ToolboxItem({
   children,
@@ -99,22 +102,22 @@ function AboutMeSection() {
                 Music
               </InterestsItem>
               <InterestsItem
-                icon="📺"
-                content="I enjoy watching anime and reading manga in my free time."
-              >
-                Anime
-              </InterestsItem>
-              <InterestsItem
                 icon="🎮"
                 content="I play video games and stream on Twitch occasionally."
               >
                 Gaming
               </InterestsItem>
+              <InterestsItem
+                icon="💻"
+                content="I love learning new technologies and improving my skills."
+              >
+                Technology
+              </InterestsItem>
             </ul>
           </div>
         </BentoBoxItem>
         <BentoBoxItem className="hidden items-center md:flex">
-          <p className="text-9xl">🥸</p>
+          <CpuArchitecture className="scale-125" />
         </BentoBoxItem>
       </BentoBox>
     </Section>
