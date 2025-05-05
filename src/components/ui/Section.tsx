@@ -7,19 +7,24 @@ type SectionProps = {
   id?: string
 }
 
-function Section({ children, className, id }: SectionProps) {
-  return (
-    <section
-      className={cn(
-        'relative flex w-full items-center justify-center px-4 md:px-0',
-        className
-      )}
-    >
-      <div id={id} className="absolute -top-24"></div>
-      {children}
-    </section>
-  )
-}
+const Section = React.forwardRef<HTMLDivElement, SectionProps>(
+  ({ children, className, id }: SectionProps, ref) => {
+    return (
+      <section
+        ref={ref}
+        className={cn(
+          'relative flex w-full items-center justify-center px-4 md:px-0',
+          className
+        )}
+      >
+        <div id={id} className="absolute -top-24"></div>
+        {children}
+      </section>
+    )
+  }
+)
+
+Section.displayName = 'Section'
 
 type SectionTitleProps = {
   children: React.ReactNode
