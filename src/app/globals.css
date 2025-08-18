@@ -4,3 +4,21 @@
 
 @source '../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
 @custom-variant dark (&:is(.dark *));
+
+@theme {
+    --keyframes-animatedTextGradient: {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    };
+
+    --background-size-300: 300%;
+
+    --animation-gradient: animatedTextGradient 6s ease infinite alternate;
+}

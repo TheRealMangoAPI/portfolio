@@ -2,6 +2,14 @@
   "name": "portfolio",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "Ricardo Pernack (mxngo)",
+    "url": "https://mxngo.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mxngo-dev/portfolio.git"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
@@ -10,11 +18,14 @@
   },
   "dependencies": {
     "@heroui/react": "^2.8.2",
+    "@iconify/react": "^6.0.0",
     "framer-motion": "^12.23.12",
+    "gsap": "^3.13.0",
     "next": "15.4.6",
-    "prettier": "^3.6.2",
+    "next-themes": "^0.4.6",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "zod": "^4.0.17"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^5.2.1",
