@@ -1,5 +1,6 @@
 import { Navigation } from '@/components/navigation'
 import { HeroSection } from '@/components/sections/hero-section'
+import { ProjectsSection } from '@/components/sections/projects-section'
 
 export default function Page() {
   return (
@@ -25,6 +26,7 @@ export default function Page() {
       />
       <Navigation />
       <HeroSection />
+      <ProjectsSection />
     </div>
   )
 }

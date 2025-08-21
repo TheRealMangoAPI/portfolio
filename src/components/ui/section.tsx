@@ -7,7 +7,7 @@ interface SectionProps {
   id?: string
 }
 
-const Section = React.forwardRef<HTMLDivElement, SectionProps>(
+export const Section = React.forwardRef<HTMLDivElement, SectionProps>(
   ({ children, className, id }: SectionProps, ref) => {
     return (
       <section
@@ -26,13 +26,15 @@ const Section = React.forwardRef<HTMLDivElement, SectionProps>(
 
 Section.displayName = 'Section'
 
-interface SectionTitleProps {
+export function SectionTitle({
+  title,
+  subTitle,
+  description,
+}: {
   title: string
   subTitle: string
   description: string
-}
-
-function SectionTitle({ title, subTitle, description }: SectionTitleProps) {
+}) {
   return (
     <div className="flex flex-col items-center justify-center space-y-2 pb-12">
       <p className="animate-gradient bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 bg-300% bg-clip-text font-bold text-transparent">
@@ -43,5 +45,3 @@ function SectionTitle({ title, subTitle, description }: SectionTitleProps) {
     </div>
   )
 }
-
-export { Section, SectionTitle }
