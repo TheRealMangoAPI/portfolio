@@ -28,7 +28,7 @@ export function HeroSection() {
             className="animate-gradient bg-gradient-to-r from-primary to-secondary bg-300% bg-clip-text text-6xl font-black text-transparent md:text-9xl"
           >
             {'<'}
-            MXNGO
+            MANGOAPI
             {' />'}
           </h1>
           <p className="text-xl md:text-2xl">

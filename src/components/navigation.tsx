@@ -7,14 +7,14 @@ import { NAVIGATION_ITEMS } from '@/data/navigation'
 
 export function Navigation() {
   return (
-    <Card className="flex flex-row justify-between items-center absolute top-8 left-1/2 -translate-x-1/2 p-4 space-x-16 z-20">
+    <Card className="flex flex-row justify-between items-center fixed top-8 left-1/2 -translate-x-1/2 p-4 space-x-16 z-20 bg-transparent backdrop-blur-xl">
       <div className="flex flex-row space-x-1.5">
         <p className="scale-125">🥭</p>
-        <p>MXNGO</p>
+        <p className="font-semibold">MangoAPI</p>
       </div>
       <div className="flex flex-row justify-between items-center space-x-4">
         {NAVIGATION_ITEMS.map(item => (
-          <Link key={item.title} href={item.href}>{item.title}</Link>
+          <Link key={item.title} href={item.href} className="text-foreground">{item.title}</Link>
         ))}
       </div>
       <div>

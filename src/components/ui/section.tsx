@@ -37,7 +37,9 @@ export function SectionTitle({
 }) {
   return (
     <div className="flex flex-col items-center justify-center space-y-2 pb-12">
-      <p className="animate-gradient bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 bg-300% bg-clip-text font-bold text-transparent">
+      <p
+        className="animate-gradient bg-gradient-to-r from-primary to-secondary bg-300% bg-clip-text font-bold text-transparent"
+      >
         {subTitle}
       </p>
       <h1 className="text-4xl font-semibold">{title}</h1>
