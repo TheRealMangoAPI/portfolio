@@ -111,6 +111,8 @@ export async function POST(req: Request) {
       )
     }
 
+    console.warn(decision)
+
     const body = await req.json()
     const validatedData = contactFormSchema.parse(body)
 
