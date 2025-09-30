@@ -1,24 +1,25 @@
-import { isSpoofedBot } from '@arcjet/inspect'
-import arcjet, { detectBot, shield, tokenBucket } from '@arcjet/next'
+import arcjet, { protectSignup } from '@arcjet/next'
 import { NextResponse } from 'next/server'
 import env from '@/lib/env'
 import { contactFormSchema } from '@/lib/validations'
 
 const aj = arcjet({
-  key: env.ARCJET_KEY!,
+  key: env.ARCJET_KEY,
   rules: [
-    shield({ mode: 'LIVE' }),
-    detectBot({
-      mode: 'LIVE',
-      allow: [
-        'CATEGORY:MONITOR',
-      ],
-    }),
-    tokenBucket({
-      mode: 'LIVE',
-      refillRate: 1,
-      interval: 60,
-      capacity: 4,
+    protectSignup({
+      email: {
+        mode: 'LIVE',
+        block: ['DISPOSABLE', 'NO_MX_RECORDS', 'INVALID'],
+      },
+      bots: {
+        mode: 'LIVE',
+        allow: ['CATEGORY:MONITOR'],
+      },
+      rateLimit: {
+        mode: 'LIVE',
+        interval: '10m',
+        max: 3,
+      },
     }),
   ],
 })
@@ -73,86 +74,71 @@ async function sendToDiscord(name: string, email: string, message: string) {
 }
 
 export async function POST(req: Request) {
-  try {
-    const decision = await aj.protect(req, { requested: 1 })
+  const body = await req.json().catch(() => {
+    return NextResponse.json({ error: 'Missing Body' }, { status: 400 })
+  })
 
-    if (decision.isDenied()) {
-      if (decision.reason.isRateLimit()) {
-        return NextResponse.json(
-          { success: false, error: 'Too many requests. Please try again later.', message: '' },
-          { status: 429 },
-        )
-      }
-      else if (decision.reason.isBot()) {
-        return NextResponse.json(
-          { success: false, error: 'Bot detected', message: '' },
-          { status: 403 },
-        )
-      }
-      else {
-        return NextResponse.json(
-          { success: false, error: 'Request blocked', message: '' },
-          { status: 403 },
-        )
-      }
-    }
+  const values = contactFormSchema.safeParse(body)
 
-    if (decision.ip.isHosting()) {
-      return NextResponse.json(
-        { success: false, error: 'Hosting IP detected', message: '' },
-        { status: 403 },
-      )
-    }
-
-    if (decision.results.some(isSpoofedBot)) {
-      return NextResponse.json(
-        { success: false, error: 'Spoofed bot detected', message: '' },
-        { status: 403 },
-      )
-    }
-
-    console.warn(decision)
-
-    const body = await req.json()
-    const validatedData = contactFormSchema.parse(body)
-
-    const discordSuccess = await sendToDiscord(
-      validatedData.name,
-      validatedData.email,
-      validatedData.message,
-    )
-
-    if (!discordSuccess) {
-      return NextResponse.json(
-        { success: false, error: 'Failed to send message. Please try again later.', message: '' },
-        { status: 500 },
-      )
-    }
-
-    return NextResponse.json({
-      success: true,
-      message: 'Message sent successfully! I\'ll get back to you soon.',
-      error: undefined,
-    })
+  if (!values.success) {
+    return NextResponse.json({ error: 'Invalid data' }, { status: 400 })
   }
-  catch (error: any) {
-    console.error('Contact form error:', error)
 
-    if (error.errors) {
+  const decision = await aj.protect(req, {
+    email: values.data.email,
+  })
+
+  if (decision.isDenied()) {
+    if (decision.reason.isEmail()) {
       return NextResponse.json(
         {
-          success: false,
-          error: 'Please check your input and try again.',
-          message: '',
-          validationErrors: error.errors,
+          message: 'Invalid email',
         },
         { status: 400 },
       )
     }
+    else if (decision.reason.isRateLimit()) {
+      return NextResponse.json(
+        {
+          message: 'Rate limit exceeded',
+        },
+        { status: 429 },
+      )
+    }
+    else if (decision.reason.isBot()) {
+      return NextResponse.json(
+        {
+          message: 'Bot detected',
+        },
+        { status: 403 },
+      )
+    }
+    else {
+      return NextResponse.json({ message: 'Forbidden' }, { status: 403 })
+    }
+  }
 
+  if (decision.ip.hasAsn() && decision.ip.asnType === 'hosting') {
+    return NextResponse.json({ message: 'Hosting provider detected' }, { status: 403 })
+  }
+
+  if (
+    decision.ip.isHosting()
+    || decision.ip.isVpn()
+    || decision.ip.isProxy()
+    || decision.ip.isRelay()
+  ) {
+    return NextResponse.json({ message: 'Suspicious network detected' }, { status: 403 })
+  }
+
+  const sent = await sendToDiscord(values.data.name, values.data.email, values.data.message)
+
+  if (!sent) {
     return NextResponse.json(
-      { success: false, error: 'An unexpected error occurred. Please try again.', message: '' },
+      { message: 'Failed to send message' },
       { status: 500 },
     )
   }
+
+  return NextResponse.json({ message: 'Message sent successfully' }, { status: 200 })
 }
