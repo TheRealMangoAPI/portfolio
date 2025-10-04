@@ -75,13 +75,13 @@ async function sendToDiscord(name: string, email: string, message: string) {
 
 export async function POST(req: Request) {
   const body = await req.json().catch(() => {
-    return NextResponse.json({ error: 'Missing Body' }, { status: 400 })
+    return NextResponse.json({ success: false, message: 'Missing Body' }, { status: 400 })
   })
 
   const values = contactFormSchema.safeParse(body)
 
   if (!values.success) {
-    return NextResponse.json({ error: 'Invalid data' }, { status: 400 })
+    return NextResponse.json({ success: false, message: 'Invalid data' }, { status: 400 })
   }
 
   const decision = await aj.protect(req, {
@@ -92,7 +92,8 @@ export async function POST(req: Request) {
     if (decision.reason.isEmail()) {
       return NextResponse.json(
         {
-          message: 'Invalid email',
+          success: false,
+          message: 'Invalid email address. Please check and try again.',
         },
         { status: 400 },
       )
@@ -100,7 +101,8 @@ export async function POST(req: Request) {
     else if (decision.reason.isRateLimit()) {
       return NextResponse.json(
         {
-          message: 'Rate limit exceeded',
+          success: false,
+          message: 'Too many requests. Please wait a few minutes before trying again.',
         },
         { status: 429 },
       )
@@ -108,18 +110,19 @@ export async function POST(req: Request) {
     else if (decision.reason.isBot()) {
       return NextResponse.json(
         {
-          message: 'Bot detected',
+          success: false,
+          message: 'Automated requests are not allowed. Please try again.',
         },
         { status: 403 },
       )
     }
     else {
-      return NextResponse.json({ message: 'Forbidden' }, { status: 403 })
+      return NextResponse.json({ success: false, message: 'Request forbidden. Please try again later.' }, { status: 403 })
     }
   }
 
   if (decision.ip.hasAsn() && decision.ip.asnType === 'hosting') {
-    return NextResponse.json({ message: 'Hosting provider detected' }, { status: 403 })
+    return NextResponse.json({ success: false, message: 'Requests from hosting providers are not allowed.' }, { status: 403 })
   }
 
   if (
@@ -128,17 +131,17 @@ export async function POST(req: Request) {
     || decision.ip.isProxy()
     || decision.ip.isRelay()
   ) {
-    return NextResponse.json({ message: 'Suspicious network detected' }, { status: 403 })
+    return NextResponse.json({ success: false, message: 'Requests from VPNs, proxies, or suspicious networks are not allowed.' }, { status: 403 })
   }
 
   const sent = await sendToDiscord(values.data.name, values.data.email, values.data.message)
 
   if (!sent) {
     return NextResponse.json(
-      { message: 'Failed to send message' },
+      { success: false, message: 'Failed to send message. Please try again later.' },
       { status: 500 },
     )
   }
 
-  return NextResponse.json({ message: 'Message sent successfully' }, { status: 200 })
+  return NextResponse.json({ success: true, message: 'Message sent successfully!' }, { status: 200 })
 }

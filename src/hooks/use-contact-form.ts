@@ -122,7 +122,8 @@ export function useContactForm(): UseContactFormReturn {
       const result: ContactApiResponse = await response.json()
 
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to send message')
+        setErrors({ general: result.message || 'Failed to send message' })
+        return
       }
 
       if (result.success) {
@@ -131,7 +132,7 @@ export function useContactForm(): UseContactFormReturn {
         setTouchedFields(new Set())
       }
       else {
-        throw new Error(result.error || 'Failed to send message')
+        setErrors({ general: result.message || 'Failed to send message' })
       }
     }
     catch (error: any) {
