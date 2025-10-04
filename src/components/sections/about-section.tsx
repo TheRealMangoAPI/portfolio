@@ -76,7 +76,7 @@ export function AboutSection() {
             </ul>
           </div>
         </BentoBoxItem>
-        <BentoBoxItem>
+        <BentoBoxItem className="col-span-3 md:col-span-1">
           <h3 className="text-lg font-semibold">Currently Learning</h3>
           <p className="mt-2 text-sm text-foreground-500">
             Technologies I’m currently learning

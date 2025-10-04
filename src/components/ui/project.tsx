@@ -56,7 +56,7 @@ export function Project({
           )}
         </CardFooter>
       </Card>
-      <div className="flex items-stretch max-w-xs">
+      <div className="hidden md:flex items-stretch max-w-xs">
         <Image
           src={image}
           alt="project-image"

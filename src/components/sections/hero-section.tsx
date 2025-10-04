@@ -21,7 +21,7 @@ export function HeroSection() {
           </a>
         ))}
       </div>
-      <Divider className="h-56 w-0.5" orientation="vertical" />
+      <Divider className="hidden  md:flex h-56 w-0.5" orientation="vertical" />
       <div className="flex flex-col items-center space-y-6">
         <div className="flex flex-col items-center justify-center">
           <h1

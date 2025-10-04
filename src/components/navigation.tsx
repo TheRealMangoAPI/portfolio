@@ -12,7 +12,7 @@ export function Navigation() {
         <p className="scale-125">🥭</p>
         <p className="font-semibold">MangoAPI</p>
       </div>
-      <div className="flex flex-row justify-between items-center space-x-4">
+      <div className="hidden md:flex flex-row justify-between items-center space-x-4">
         {NAVIGATION_ITEMS.map(item => (
           <Link key={item.title} href={item.href} className="text-foreground">{item.title}</Link>
         ))}
