@@ -1,19 +1,38 @@
-import React from 'react'
-import HeroSection from '@/components/sections/HeroSection'
-import ProjectsSection from '@/components/sections/ProjectsSection'
-import AboutMeSection from '@/components/sections/AboutMeSection'
-import ContactSection from '@/components/sections/ContactSection'
+import { Footer } from '@/components/footer'
+import { Navigation } from '@/components/navigation'
+import { AboutSection } from '@/components/sections/about-section'
+import { ContactSection } from '@/components/sections/contact-section'
+import { HeroSection } from '@/components/sections/hero-section'
+import { ProjectsSection } from '@/components/sections/projects-section'
 
-function Page() {
+export default function Page() {
   return (
-    <>
+
+    <div className="min-h-screen w-full relative bg-black">
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(251, 191, 36, 0.25), transparent 70%), #000000',
+        }}
+      />
+      <div
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          backgroundImage: `
+        repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(75, 85, 99, 0.08) 19px, rgba(75, 85, 99, 0.08) 20px, transparent 20px, transparent 39px, rgba(75, 85, 99, 0.08) 39px, rgba(75, 85, 99, 0.08) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(75, 85, 99, 0.08) 19px, rgba(75, 85, 99, 0.08) 20px, transparent 20px, transparent 39px, rgba(75, 85, 99, 0.08) 39px, rgba(75, 85, 99, 0.08) 40px),
+        radial-gradient(circle at 20px 20px, rgba(55, 65, 81, 0.12) 2px, transparent 2px),
+        radial-gradient(circle at 40px 40px, rgba(55, 65, 81, 0.12) 2px, transparent 2px)
+      `,
+          backgroundSize: '40px 40px, 40px 40px, 40px 40px, 40px 40px',
+        }}
+      />
+      <Navigation />
       <HeroSection />
       <ProjectsSection />
-      <AboutMeSection />
+      <AboutSection />
       <ContactSection />
-      <div className="fixed bottom-0 left-0 right-0 top-0 -z-10 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:28px_28px]"></div>
-    </>
+      <Footer />
+    </div>
   )
 }
-
-export default Page

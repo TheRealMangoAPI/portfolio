@@ -1,23 +1,14 @@
-type NavigationItem = {
-  name: string
-  href: string
-}
-
-export const NavigationItems: NavigationItem[] = [
+export const NAVIGATION_ITEMS = [
   {
-    name: 'Projects',
-    href: '/#projects'
+    title: 'Projects',
+    href: '/#projects',
   },
   {
-    name: 'About Me',
-    href: '/#about'
+    title: 'About Me',
+    href: '/#about',
   },
   {
-    name: 'Timeline',
-    href: '/timeline'
+    title: 'Contact',
+    href: '/#contact',
   },
-  {
-    name: 'Contact',
-    href: '/#contact'
-  }
 ]
