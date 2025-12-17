@@ -6,6 +6,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
+    /* Custom xs breakpoint for extra small devices (480px+) */
+    --breakpoint-xs: 480px;
+
     --keyframes-animatedTextGradient: {
         0% {
             background-position: 0% 50%;

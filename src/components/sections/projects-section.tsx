@@ -4,7 +4,7 @@ import { PROJECT_ITEMS } from '@/data/projects'
 
 export function ProjectsSection() {
   return (
-    <Section className="flex-col">
+    <Section className="flex-col pt-8 sm:pt-12 lg:pt-16">
       <SectionTitle
         title="Featured Projects"
         subTitle="PROJECTS"
