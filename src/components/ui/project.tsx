@@ -1,11 +1,12 @@
 'use client'
 
 import type { ReactNode } from 'react'
+
 import { Button, Card, CardBody, CardFooter, CardHeader, Image, Link } from '@heroui/react'
 import { Icon } from '@iconify/react'
 
 export function ProjectList({ children }: { children: ReactNode }) {
-  return <div className="flex w-full max-w-6xl flex-col space-y-24">{children}</div>
+  return <div className="flex w-full max-w-6xl flex-col space-y-12 sm:space-y-16 lg:space-y-24">{children}</div>
 }
 
 export function Project({
@@ -27,17 +28,17 @@ export function Project({
 }) {
   return (
     <div
-      className={`flex items-center justify-center gap-x-8 w-full ${idx % 2 === 0 ? 'flex-row-reverse' : 'flex-row'}`}
+      className={`flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-x-8 w-full ${idx % 2 === 0 ? 'lg:flex-row-reverse' : ''}`}
     >
-      <Card className="p-4 w-full flex flex-col h-full">
+      <Card className="p-3 sm:p-4 w-full flex flex-col h-full">
         <CardHeader>
-          <div className="flex flex-row">
-            <h1 className="text-4xl font-semibold">{title}</h1>
-            <p className="-mt-0.5 ml-2">{notice}</p>
+          <div className="flex flex-col sm:flex-row sm:items-baseline gap-1">
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-semibold">{title}</h3>
+            <p className="text-xs sm:text-sm text-foreground-500">{notice}</p>
           </div>
         </CardHeader>
         <CardBody>
-          <p>{description}</p>
+          <p className="text-sm sm:text-base text-foreground-600">{description}</p>
         </CardBody>
         <CardFooter className="flex flex-row items-center space-x-2">
           <Button
@@ -56,11 +57,20 @@ export function Project({
           )}
         </CardFooter>
       </Card>
-      <div className="hidden md:flex items-stretch max-w-xs">
+
+      <div className="hidden sm:flex items-center justify-center w-full sm:w-auto sm:max-w-[200px] md:max-w-[250px] lg:max-w-xs shrink-0">
         <Image
           src={image}
-          alt="project-image"
-          className="max-h-full w-auto object-contain"
+          alt={`${title} project preview`}
+          className="w-full h-auto object-contain rounded-lg"
+        />
+      </div>
+
+      <div className="sm:hidden w-full">
+        <Image
+          src={image}
+          alt={`${title} project preview`}
+          className="w-full max-h-48 object-cover rounded-lg"
         />
       </div>
     </div>
