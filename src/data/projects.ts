@@ -1,4 +1,4 @@
-import { LINKS } from '@/data/links';
+import { LINKS } from '@/data/links'
 
 export const PROJECT_ITEMS = [
   {
@@ -34,4 +34,4 @@ export const PROJECT_ITEMS = [
     projectLink: 'https://mxngo.dev/',
     srcLink: LINKS.GITHUB_REPO,
   },
-];
+]
