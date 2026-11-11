@@ -10,7 +10,7 @@ import { Section, SectionTitle } from '@/components/ui/section'
 
 export function AboutSection() {
   return (
-    <Section className="flex-col pt-16 sm:pt-24 lg:pt-36">
+    <Section id="about"className="flex-col pt-16 sm:pt-24 lg:pt-36">
       <SectionTitle
         title="A Glimpse Into My World"
         subTitle="ABOUT ME"
