@@ -27,7 +27,7 @@ export function ContactSection() {
 
   if (isSubmitted) {
     return (
-      <Section className="flex-col pt-16 sm:pt-24 lg:pt-36">
+      <Section id="contact" className="flex-col pt-16 sm:pt-24 lg:pt-36">
         <Card className="p-4 sm:p-6 lg:p-8 w-full max-w-6xl">
           <CardBody className="flex flex-col items-center justify-center text-center gap-4 sm:gap-6 py-8 sm:py-12">
             <div className="w-24 h-24 sm:w-32 sm:h-32">
